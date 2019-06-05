@@ -42,7 +42,7 @@ export default {
         this.password = ''
         this.isReg = false
       }else {
-        alert('两次秘密不匹配')
+        alert('两次密码匹配')
       }
     },
     cancel() {
@@ -50,9 +50,9 @@ export default {
     },
     login() {
       if(localStorage.getItem('username') === this.username && localStorage.getItem('password') === this.password) {
-        this.$router.push('/home/list')
         this.username = ''
         this.password = ''
+        this.$router.push('/home/list')
       }else {
         alert('登录名或密码错误')
       }
