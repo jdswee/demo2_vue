@@ -4,24 +4,41 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
+  <title>TodoList</title>
   <script src="https://cdn.bootcss.com/vue/2.6.10/vue.min.js"></script>
 </head>
 <body>
   <div id="root">
-      <div @click="handleClick()">{{msg}}</div>
+    <div>
+      <input v-model="inputValue"/>
+      <button @click="handleSubmit">提交</button>
+    </div>
+    <ul>
+      <todo-item
+        v-for="(item, index) in lists"
+        :key="index"
+        :content="item">
+      </todo-item>
+    </ul>
   </div>
   <script>
+    Vue.component('todo-item', {
+      props: ['content'],
+      template: '<li>{{content}}</li>'
+    })
+
     new Vue({
       el: '#root',
       data() {
         return {
-          msg: 'hello world'
+          inputValue: '',
+          lists: []
         }
       },
       methods: {
-        handleClick() {
-          this.msg = 'hello vue'
+        handleSubmit() {
+          this.lists.push(this.inputValue)
+          this.inputValue = ''
         }
       },
     })
