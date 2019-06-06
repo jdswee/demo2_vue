@@ -17,14 +17,21 @@
       <todo-item
         v-for="(item, index) in lists"
         :key="index"
-        :content="item">
+        :content="item"
+        :index="index"
+        @delete="handleDelete">
       </todo-item>
     </ul>
   </div>
   <script>
     Vue.component('todo-item', {
-      props: ['content'],
-      template: '<li>{{content}}</li>'
+      props: ['content', 'index'],
+      template: '<li @click="handleClick">{{content}}</li>',
+      methods: {
+        handleClick() {
+          this.$emit('delete', this.index)
+        }
+      }
     })
 
     new Vue({
@@ -39,6 +46,9 @@
         handleSubmit() {
           this.lists.push(this.inputValue)
           this.inputValue = ''
+        },
+        handleDelete(index) {
+          this.lists.splice(index, 1)
         }
       },
     })
